@@ -181,6 +181,49 @@ def download_youtube_audio(url: str) -> str:
                 'skip': ['dash', 'hls'],
                 'player_skip': ['js', 'configs', 'webpage']
             }
+        },
+        # New anti-bot measures
+        'cookiesfrombrowser': ('firefox',),  # Try Firefox cookies instead
+        'no_check_certificates': True,
+        'prefer_insecure': True,
+        'legacyserverconnect': False,
+        'no_warnings': True,
+        'quiet': True,
+        'no_color': True,
+        'progress_hooks': [],
+        'extract_flat': False,
+        'force_generic_extractor': False,
+        'geo_verification_proxy': '',
+        'source_address': '0.0.0.0',
+        'socket_timeout': 30,
+        'retries': 10,
+        'fragment_retries': 10,
+        'extractor_retries': 10,
+        'file_access_retries': 10,
+        'extractor_args': {
+            'youtube': {
+                'skip': ['dash', 'hls'],
+                'player_skip': ['js', 'configs', 'webpage']
+            }
+        },
+        # Additional headers for anti-bot
+        'http_headers': {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36',
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+            'Accept-Language': 'en-us,en;q=0.5',
+            'Sec-Fetch-Mode': 'navigate',
+            'Sec-Fetch-Site': 'none',
+            'Sec-Fetch-User': '?1',
+            'Sec-Fetch-Dest': 'document',
+            'Upgrade-Insecure-Requests': '1',
+            'Accept-Encoding': 'gzip, deflate, br',
+            'Connection': 'keep-alive',
+            'Cache-Control': 'max-age=0',
+            'DNT': '1',
+            'Sec-Ch-Ua': '"Not A(Brand";v="99", "Google Chrome";v="121", "Chromium";v="121"',
+            'Sec-Ch-Ua-Mobile': '?0',
+            'Sec-Ch-Ua-Platform': '"Windows"',
+            'Upgrade-Insecure-Requests': '1'
         }
     }
     
