@@ -78,7 +78,7 @@ def download_youtube_audio(url: str) -> str:
     """Download YouTube video and convert to highest quality MP3."""
     logger.info(f"Starting download for URL: {url}")
     ydl_opts = {
-        'format': 'm4a/bestaudio/best',  # Changed format selection
+        'format': 'm4a/bestaudio/best',
         'postprocessors': [{
             'key': 'FFmpegExtractAudio',
             'preferredcodec': 'mp3',
@@ -86,17 +86,17 @@ def download_youtube_audio(url: str) -> str:
         }],
         'outtmpl': str(DOWNLOAD_DIR / '%(title)s.%(ext)s'),
         'quiet': True,
-        # Enhanced anti-bot protection
+        # Mobile User-Agent and headers
         'http_headers': {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36',
-            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+            'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_2_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.2 Mobile/15E148 Safari/604.1',
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
             'Accept-Language': 'en-US,en;q=0.9',
             'Accept-Encoding': 'gzip, deflate, br',
             'Connection': 'keep-alive',
             'Cache-Control': 'max-age=0',
             'Sec-Ch-Ua': '"Not A(Brand";v="99", "Google Chrome";v="121", "Chromium";v="121"',
-            'Sec-Ch-Ua-Mobile': '?0',
-            'Sec-Ch-Ua-Platform': '"Windows"',
+            'Sec-Ch-Ua-Mobile': '?1',
+            'Sec-Ch-Ua-Platform': '"iOS"',
             'Sec-Fetch-Dest': 'document',
             'Sec-Fetch-Mode': 'navigate',
             'Sec-Fetch-Site': 'none',
@@ -138,7 +138,7 @@ def download_youtube_audio(url: str) -> str:
             'youtube': {
                 'skip': ['dash', 'hls'],
                 'player_skip': ['js', 'configs', 'webpage'],
-                'player_client': ['web', 'ios', 'android'],  # Added multiple clients
+                'player_client': ['android', 'ios'],  # Using mobile clients
                 'player_params': {
                     'enablejsapi': '1',
                     'origin': 'https://www.youtube.com',
@@ -159,37 +159,7 @@ def download_youtube_audio(url: str) -> str:
         'geo_verification_proxy': '',
         'source_address': '0.0.0.0',
         # New anti-bot measures
-        'compat_opts': ['no-youtube-channel-redirect', 'no-youtube-unavailable-videos'],
-        'extract_flat': False,
-        'force_generic_extractor': False,
-        'no_check_certificates': True,
-        'prefer_insecure': True,
-        'legacyserverconnect': False,
-        'no_warnings': True,
-        'quiet': True,
-        'no_color': True,
-        'progress_hooks': [],
-        'extract_flat': False,
-        'force_generic_extractor': False,
-        'geo_verification_proxy': '',
-        'source_address': '0.0.0.0',
-        'socket_timeout': 30,
-        'retries': 10,
-        'fragment_retries': 10,
-        'extractor_retries': 10,
-        'file_access_retries': 10,
-        'extractor_args': {
-            'youtube': {
-                'skip': ['dash', 'hls'],
-                'player_skip': ['js', 'configs', 'webpage'],
-                'player_client': ['web', 'ios', 'android'],
-                'player_params': {
-                    'enablejsapi': '1',
-                    'origin': 'https://www.youtube.com',
-                    'widget_referrer': 'https://www.youtube.com'
-                }
-            }
-        }
+        'compat_opts': ['no-youtube-channel-redirect', 'no-youtube-unavailable-videos']
     }
     
     try:
