@@ -78,7 +78,7 @@ def download_youtube_audio(url: str) -> str:
     """Download YouTube video and convert to highest quality MP3."""
     logger.info(f"Starting download for URL: {url}")
     ydl_opts = {
-        'format': 'bestaudio/best',  # Simplified format selection
+        'format': 'bestaudio/best',
         'postprocessors': [{
             'key': 'FFmpegExtractAudio',
             'preferredcodec': 'mp3',
@@ -86,15 +86,25 @@ def download_youtube_audio(url: str) -> str:
         }],
         'outtmpl': str(DOWNLOAD_DIR / '%(title)s.%(ext)s'),
         'quiet': True,
-        # Maximum speed configuration
-        'no_check_certificates': True,
+        # Anti-bot protection bypass
+        'cookiesfrombrowser': ('chrome',),  # Use Chrome cookies
         'http_headers': {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36'
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36',
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+            'Accept-Language': 'en-us,en;q=0.5',
+            'Sec-Fetch-Mode': 'navigate',
+            'Sec-Fetch-Site': 'none',
+            'Sec-Fetch-User': '?1',
+            'Sec-Fetch-Dest': 'document',
+            'Upgrade-Insecure-Requests': '1',
+            'Accept-Encoding': 'gzip, deflate, br',
+            'Connection': 'keep-alive',
+            'Cache-Control': 'max-age=0'
         },
         'socket_timeout': 30,
-        'retries': 3,
-        'fragment_retries': 3,
-        'extractor_retries': 3,
+        'retries': 10,
+        'fragment_retries': 10,
+        'extractor_retries': 10,
         'verbose': True,
         'no_warnings': False,
         'extract_flat': False,
@@ -104,31 +114,31 @@ def download_youtube_audio(url: str) -> str:
         'sleep_interval': 0,
         'max_sleep_interval': 0,
         'sleep_interval_requests': 0,
-        'throttledratelimit': 1000000,  # Very high rate limit
-        'ratelimit': 1000000,  # Very high rate limit
+        'throttledratelimit': 1000000,
+        'ratelimit': 1000000,
         'retry_sleep': 0,
         'fragment_retry_sleep': 0,
         'file_access_retry_sleep': 0,
         'extractor_retry_sleep': 0,
         # Maximum speed optimizations
-        'concurrent_fragments': 10,  # Increased concurrent downloads
-        'buffersize': 65536,  # Doubled buffer size
-        'http_chunk_size': 20971520,  # 20MB chunks
-        'retry_sleep_functions': {'fragment': lambda n: 0},  # No sleep on retry
-        'fragment_retry_sleep_functions': {'fragment': lambda n: 0},  # No sleep on fragment retry
+        'concurrent_fragments': 10,
+        'buffersize': 65536,
+        'http_chunk_size': 20971520,
+        'retry_sleep_functions': {'fragment': lambda n: 0},
+        'fragment_retry_sleep_functions': {'fragment': lambda n: 0},
         'downloader_args': {
             'http': ['--buffer-size=65536', '--max-connection-per-server=10']
         },
         'external_downloader_args': {
-            'ffmpeg': ['-threads', '8']  # Use multiple CPU threads for conversion
+            'ffmpeg': ['-threads', '8']
         },
-        'prefer_insecure': True,  # Skip HTTPS verification for speed
-        'no_warnings': True,  # Reduce logging overhead
-        'quiet': True,  # Reduce logging overhead
-        'no_color': True,  # Reduce logging overhead
-        'progress_hooks': [],  # Remove progress hooks for speed
+        'prefer_insecure': True,
+        'no_warnings': True,
+        'quiet': True,
+        'no_color': True,
+        'progress_hooks': [],
         'postprocessor_args': {
-            'FFmpegExtractAudio': ['-threads', '8']  # Use multiple CPU threads for audio extraction
+            'FFmpegExtractAudio': ['-threads', '8']
         }
     }
     
