@@ -139,6 +139,26 @@ def download_youtube_audio(url: str) -> str:
         'progress_hooks': [],
         'postprocessor_args': {
             'FFmpegExtractAudio': ['-threads', '8']
+        },
+        # Latest features
+        'extract_flat': False,
+        'force_generic_extractor': False,
+        'no_check_certificates': True,
+        'legacyserverconnect': False,
+        'no_warnings': True,
+        'prefer_insecure': True,
+        'geo_verification_proxy': '',
+        'source_address': '0.0.0.0',
+        'socket_timeout': 30,
+        'retries': 10,
+        'fragment_retries': 10,
+        'extractor_retries': 10,
+        'file_access_retries': 10,
+        'extractor_args': {
+            'youtube': {
+                'skip': ['dash', 'hls'],
+                'player_skip': ['js', 'configs', 'webpage']
+            }
         }
     }
     
