@@ -86,11 +86,7 @@ def download_youtube_audio(url: str) -> str:
         }],
         'outtmpl': str(DOWNLOAD_DIR / '%(title)s.%(ext)s'),
         'quiet': True,
-        # Cookie handling
-        'cookiesfrombrowser': ('chrome',),  # Use Chrome cookies
-        'cookiefile': 'cookies.txt',  # Fallback cookie file
-        'cookiesfrombrowser': ('firefox',),  # Try Firefox cookies as backup
-        # Mobile User-Agent and headers
+        # Enhanced anti-bot measures
         'http_headers': {
             'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_2_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.2 Mobile/15E148 Safari/604.1',
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
@@ -106,7 +102,9 @@ def download_youtube_audio(url: str) -> str:
             'Sec-Fetch-Site': 'none',
             'Sec-Fetch-User': '?1',
             'Upgrade-Insecure-Requests': '1',
-            'DNT': '1'
+            'DNT': '1',
+            'Origin': 'https://www.youtube.com',
+            'Referer': 'https://www.youtube.com/'
         },
         # Network optimizations
         'socket_timeout': 30,
@@ -163,6 +161,15 @@ def download_youtube_audio(url: str) -> str:
         'geo_verification_proxy': '',
         'source_address': '0.0.0.0',
         # New anti-bot measures
+        'compat_opts': ['no-youtube-channel-redirect', 'no-youtube-unavailable-videos'],
+        # Additional bypasses
+        'no_warnings': True,
+        'quiet': True,
+        'no_color': True,
+        'extract_flat': False,
+        'force_generic_extractor': False,
+        'geo_verification_proxy': '',
+        'source_address': '0.0.0.0',
         'compat_opts': ['no-youtube-channel-redirect', 'no-youtube-unavailable-videos']
     }
     
