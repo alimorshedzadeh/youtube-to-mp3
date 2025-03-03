@@ -79,17 +79,6 @@ def download_youtube_audio(url: str) -> str:
     """Download YouTube video and convert to highest quality MP3."""
     logger.info(f"Starting download for URL: {url}")
     
-    # Load secure cookies if available
-    cookies_file = 'secure_cookies.json'
-    cookies_data = []
-    if os.path.exists(cookies_file):
-        try:
-            with open(cookies_file, 'r') as f:
-                cookies_data = json.load(f)
-            logger.info("Loaded secure cookies successfully")
-        except Exception as e:
-            logger.error(f"Error loading cookies: {e}")
-    
     ydl_opts = {
         'format': 'm4a/bestaudio/best',
         'postprocessors': [{
@@ -99,10 +88,6 @@ def download_youtube_audio(url: str) -> str:
         }],
         'outtmpl': str(DOWNLOAD_DIR / '%(title)s.%(ext)s'),
         'quiet': True,
-        # Cookie handling
-        'cookiesfrombrowser': ('chrome',),  # Try Chrome first
-        'cookiesfrombrowser': ('firefox',),  # Try Firefox as backup
-        'cookiefile': 'secure_cookies.json' if cookies_data else None,  # Use secure cookies if available
         # Enhanced anti-bot measures
         'http_headers': {
             'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_2_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.2 Mobile/15E148 Safari/604.1',
@@ -178,6 +163,15 @@ def download_youtube_audio(url: str) -> str:
         'geo_verification_proxy': '',
         'source_address': '0.0.0.0',
         # New anti-bot measures
+        'compat_opts': ['no-youtube-channel-redirect', 'no-youtube-unavailable-videos'],
+        # Additional bypasses
+        'no_warnings': True,
+        'quiet': True,
+        'no_color': True,
+        'extract_flat': False,
+        'force_generic_extractor': False,
+        'geo_verification_proxy': '',
+        'source_address': '0.0.0.0',
         'compat_opts': ['no-youtube-channel-redirect', 'no-youtube-unavailable-videos']
     }
     
