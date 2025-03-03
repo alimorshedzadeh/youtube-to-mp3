@@ -86,6 +86,10 @@ def download_youtube_audio(url: str) -> str:
         }],
         'outtmpl': str(DOWNLOAD_DIR / '%(title)s.%(ext)s'),
         'quiet': True,
+        # Cookie handling
+        'cookiesfrombrowser': ('chrome',),  # Use Chrome cookies
+        'cookiefile': 'cookies.txt',  # Fallback cookie file
+        'cookiesfrombrowser': ('firefox',),  # Try Firefox cookies as backup
         # Mobile User-Agent and headers
         'http_headers': {
             'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_2_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.2 Mobile/15E148 Safari/604.1',
