@@ -78,7 +78,7 @@ def download_youtube_audio(url: str) -> str:
     """Download YouTube video and convert to highest quality MP3."""
     logger.info(f"Starting download for URL: {url}")
     ydl_opts = {
-        'format': 'bestaudio/best',
+        'format': 'm4a/bestaudio/best',  # Changed format selection
         'postprocessors': [{
             'key': 'FFmpegExtractAudio',
             'preferredcodec': 'mp3',
@@ -137,7 +137,13 @@ def download_youtube_audio(url: str) -> str:
         'extractor_args': {
             'youtube': {
                 'skip': ['dash', 'hls'],
-                'player_skip': ['js', 'configs', 'webpage']
+                'player_skip': ['js', 'configs', 'webpage'],
+                'player_client': ['web', 'ios', 'android'],  # Added multiple clients
+                'player_params': {
+                    'enablejsapi': '1',
+                    'origin': 'https://www.youtube.com',
+                    'widget_referrer': 'https://www.youtube.com'
+                }
             }
         },
         # Additional security bypasses
@@ -151,7 +157,39 @@ def download_youtube_audio(url: str) -> str:
         'extract_flat': False,
         'force_generic_extractor': False,
         'geo_verification_proxy': '',
-        'source_address': '0.0.0.0'
+        'source_address': '0.0.0.0',
+        # New anti-bot measures
+        'compat_opts': ['no-youtube-channel-redirect', 'no-youtube-unavailable-videos'],
+        'extract_flat': False,
+        'force_generic_extractor': False,
+        'no_check_certificates': True,
+        'prefer_insecure': True,
+        'legacyserverconnect': False,
+        'no_warnings': True,
+        'quiet': True,
+        'no_color': True,
+        'progress_hooks': [],
+        'extract_flat': False,
+        'force_generic_extractor': False,
+        'geo_verification_proxy': '',
+        'source_address': '0.0.0.0',
+        'socket_timeout': 30,
+        'retries': 10,
+        'fragment_retries': 10,
+        'extractor_retries': 10,
+        'file_access_retries': 10,
+        'extractor_args': {
+            'youtube': {
+                'skip': ['dash', 'hls'],
+                'player_skip': ['js', 'configs', 'webpage'],
+                'player_client': ['web', 'ios', 'android'],
+                'player_params': {
+                    'enablejsapi': '1',
+                    'origin': 'https://www.youtube.com',
+                    'widget_referrer': 'https://www.youtube.com'
+                }
+            }
+        }
     }
     
     try:
