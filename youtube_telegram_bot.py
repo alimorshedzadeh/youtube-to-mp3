@@ -3,7 +3,6 @@ import logging
 import re
 import socket
 import requests
-import json
 from pathlib import Path
 from dotenv import load_dotenv
 from telegram import Update
@@ -80,7 +79,7 @@ def download_youtube_audio(url: str) -> str:
     logger.info(f"Starting download for URL: {url}")
     
     ydl_opts = {
-        'format': 'm4a/bestaudio/best',
+        'format': 'bestaudio/best',
         'postprocessors': [{
             'key': 'FFmpegExtractAudio',
             'preferredcodec': 'mp3',
@@ -90,23 +89,21 @@ def download_youtube_audio(url: str) -> str:
         'quiet': True,
         # Enhanced anti-bot measures
         'http_headers': {
-            'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_2_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.2 Mobile/15E148 Safari/604.1',
-            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36',
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
             'Accept-Language': 'en-US,en;q=0.9',
             'Accept-Encoding': 'gzip, deflate, br',
             'Connection': 'keep-alive',
             'Cache-Control': 'max-age=0',
             'Sec-Ch-Ua': '"Not A(Brand";v="99", "Google Chrome";v="121", "Chromium";v="121"',
-            'Sec-Ch-Ua-Mobile': '?1',
-            'Sec-Ch-Ua-Platform': '"iOS"',
+            'Sec-Ch-Ua-Mobile': '?0',
+            'Sec-Ch-Ua-Platform': '"Windows"',
             'Sec-Fetch-Dest': 'document',
             'Sec-Fetch-Mode': 'navigate',
             'Sec-Fetch-Site': 'none',
             'Sec-Fetch-User': '?1',
             'Upgrade-Insecure-Requests': '1',
-            'DNT': '1',
-            'Origin': 'https://www.youtube.com',
-            'Referer': 'https://www.youtube.com/'
+            'DNT': '1'
         },
         # Network optimizations
         'socket_timeout': 30,
@@ -142,7 +139,7 @@ def download_youtube_audio(url: str) -> str:
             'youtube': {
                 'skip': ['dash', 'hls'],
                 'player_skip': ['js', 'configs', 'webpage'],
-                'player_client': ['android', 'ios'],  # Using mobile clients
+                'player_client': ['web'],  # Using web client
                 'player_params': {
                     'enablejsapi': '1',
                     'origin': 'https://www.youtube.com',
@@ -163,15 +160,6 @@ def download_youtube_audio(url: str) -> str:
         'geo_verification_proxy': '',
         'source_address': '0.0.0.0',
         # New anti-bot measures
-        'compat_opts': ['no-youtube-channel-redirect', 'no-youtube-unavailable-videos'],
-        # Additional bypasses
-        'no_warnings': True,
-        'quiet': True,
-        'no_color': True,
-        'extract_flat': False,
-        'force_generic_extractor': False,
-        'geo_verification_proxy': '',
-        'source_address': '0.0.0.0',
         'compat_opts': ['no-youtube-channel-redirect', 'no-youtube-unavailable-videos']
     }
     
