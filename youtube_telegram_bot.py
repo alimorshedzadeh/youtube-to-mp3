@@ -87,7 +87,6 @@ def download_youtube_audio(url: str) -> str:
         'outtmpl': str(DOWNLOAD_DIR / '%(title)s.%(ext)s'),
         'quiet': True,
         # Anti-bot protection bypass
-        'cookiesfrombrowser': ('chrome',),  # Use Chrome cookies
         'http_headers': {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36',
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
@@ -147,6 +146,29 @@ def download_youtube_audio(url: str) -> str:
         'legacyserverconnect': False,
         'no_warnings': True,
         'prefer_insecure': True,
+        'geo_verification_proxy': '',
+        'source_address': '0.0.0.0',
+        'socket_timeout': 30,
+        'retries': 10,
+        'fragment_retries': 10,
+        'extractor_retries': 10,
+        'file_access_retries': 10,
+        'extractor_args': {
+            'youtube': {
+                'skip': ['dash', 'hls'],
+                'player_skip': ['js', 'configs', 'webpage']
+            }
+        },
+        # Additional anti-bot measures
+        'no_check_certificates': True,
+        'prefer_insecure': True,
+        'legacyserverconnect': False,
+        'no_warnings': True,
+        'quiet': True,
+        'no_color': True,
+        'progress_hooks': [],
+        'extract_flat': False,
+        'force_generic_extractor': False,
         'geo_verification_proxy': '',
         'source_address': '0.0.0.0',
         'socket_timeout': 30,
